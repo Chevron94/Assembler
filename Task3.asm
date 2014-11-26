@@ -89,11 +89,19 @@ NEW_LINE endp
   mov di,si
   mov bx,0
   std
+  LODSB
+  cmp al,space
+  je NOSYMBOL
+  inc di
+  stosb
+  inc bx
+  jmp WRITE
   
 NEXT:
   cmp dx,0
   je FINPROC
   LODSB
+NOSYMBOL:
   dec dx
   cmp dx,0
   je FINPROC
@@ -102,6 +110,7 @@ NEXT:
   je WRITE
   cmp al, space
   jne WRITE
+COPYPASTE:
   add si,bx
   inc si
   add di,bx
